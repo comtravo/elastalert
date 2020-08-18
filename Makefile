@@ -18,7 +18,7 @@ test:
 
 test-docker:
 	docker-compose --project-name elastalert build tox
-	docker-compose --project-name elastalert run tox
+	docker-compose --project-name elastalert run tox pytest
 
 clean:
 	make -C docs clean
