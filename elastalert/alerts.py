@@ -797,7 +797,7 @@ class JiraAlerter(Alerter):
                     except JIRAError as e:
                         logging.exception("Error while commenting on ticket %s: %s" % (ticket, e))
                     if self.labels:
-                        for l in self.labels:
+                        for l in self.labels: # noqa: E741
                             try:
                                 ticket.fields.labels.append(l)
                             except JIRAError as e:
