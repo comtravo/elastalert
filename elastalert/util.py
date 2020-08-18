@@ -425,7 +425,7 @@ def resolve_string(string, match, missing_text='<MISSING VALUE>'):
     dd_match['_missing_value'] = missing_text
     while True:
         try:
-            string = string % dd_match
+            string = u'{}'.format(string) % dd_match
             string = string.format(**dd_match)
             break
         except KeyError as e:
