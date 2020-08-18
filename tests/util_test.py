@@ -171,35 +171,41 @@ def test_resolve_string(ea):
         'temperature': 45,
         'humidity': 80.56,
         'sensors': ['outsideSensor', 'insideSensor'],
-        'foo': {'bar': 'baz'}
+        'foo': {'bar': 'baz'},
+        'unicode_message': u'failed to fill address from geocode for Alexanderplatz, Friedrichstraße: failed to identify street'
     }
 
     expected_outputs = [
         "mySystem is online <MISSING VALUE>",
         "Sensors ['outsideSensor', 'insideSensor'] in the <MISSING VALUE> have temp 45 and 80.56 humidity",
         "Actuator <MISSING VALUE> in the <MISSING VALUE> has temp <MISSING VALUE>",
-        'Something baz']
+        'Something baz',
+        u'unicode message: failed to fill address from geocode for Alexanderplatz, Friedrichstraße: failed to identify street']
     old_style_strings = [
         "%(name)s is online %(noKey)s",
         "Sensors %(sensors)s in the %(noPlace)s have temp %(temperature)s and %(humidity)s humidity",
         "Actuator %(noKey)s in the %(noPlace)s has temp %(noKey)s",
-        'Something %(foo.bar)s']
+        'Something %(foo.bar)s',
+        "unicode message: %(unicode_message)s"]
 
     assert resolve_string(old_style_strings[0], match) == expected_outputs[0]
     assert resolve_string(old_style_strings[1], match) == expected_outputs[1]
     assert resolve_string(old_style_strings[2], match) == expected_outputs[2]
     assert resolve_string(old_style_strings[3], match) == expected_outputs[3]
+    assert resolve_string(old_style_strings[4], match) == expected_outputs[4]
 
     new_style_strings = [
         "{name} is online {noKey}",
         "Sensors {sensors} in the {noPlace} have temp {temperature} and {humidity} humidity",
         "Actuator {noKey} in the {noPlace} has temp {noKey}",
-        "Something {foo[bar]}"]
+        "Something {foo[bar]}",
+        "unicode message: {unicode_message}"]
 
     assert resolve_string(new_style_strings[0], match) == expected_outputs[0]
     assert resolve_string(new_style_strings[1], match) == expected_outputs[1]
     assert resolve_string(new_style_strings[2], match) == expected_outputs[2]
     assert resolve_string(new_style_strings[3], match) == expected_outputs[3]
+    assert resolve_string(new_style_strings[4], match) == expected_outputs[4]
 
 
 def test_format_index():
